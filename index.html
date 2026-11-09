@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="author" content="Dion Durma">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>Rënia e lirë</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Literata:opsz,wght@7..72,400;7..72,600&family=JetBrains+Mono:wght@400;600&family=Caveat:wght@500;700&display=swap">
+<style>
+/* Layout: one lab-notebook page on graph paper, red margin rule at left, sections stacked like a lab report */
+:root {
+  --paper: #f6f8fc;
+  --grid: #e3e9f3;
+  --card: #ffffff;
+  --ink: #1a2847;
+  --muted: #5a6683;
+  --line: #cfd8e8;
+  --accent: #2d58cf;
+  --accent-soft: #e4ebfb;
+  --margin: #d2533a;
+  --mark: #f6d64a;
+  --feather: #8b8fa0;
+  --dice: #f4f4f1;
+  --dice-pip: #1a2847;
+  --cork: #c79a62;
+  --cork-dark: #8f6638;
+  --notebook: #2d58cf;
+  --series2: #d2533a;
+  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Literata", Georgia, "Times New Roman", serif;
+  --f-mono: "JetBrains Mono", Consolas, "Courier New", monospace;
+  --f-hand: "Caveat", "Segoe Print", "Comic Sans MS", cursive;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f1420; --grid: #182031; --card: #151c2b; --ink: #e2e8f5; --muted: #98a4c0;
+    --line: #2a3550; --accent: #7f9dff; --accent-soft: #1d2945; --margin: #e57c63; --mark: #d8b63a;
+    --feather: #b9bdcc; --dice: #e9e9e4; --dice-pip: #121826; --cork: #cfa36d; --cork-dark: #97703f;
+    --notebook: #6f8ff5; --series2: #e57c63;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f1420; --grid: #182031; --card: #151c2b; --ink: #e2e8f5; --muted: #98a4c0;
+  --line: #2a3550; --accent: #7f9dff; --accent-soft: #1d2945; --margin: #e57c63; --mark: #d8b63a;
+  --feather: #b9bdcc; --dice: #e9e9e4; --dice-pip: #121826; --cork: #cfa36d; --cork-dark: #97703f;
+  --notebook: #6f8ff5; --series2: #e57c63;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16.5px;
+  line-height: 1.6;
+}
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding-block: 40px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid;
+  gap: 56px;
+}
+.sheet { position: relative; }
+@media (min-width: 980px) {
+  .page { padding-left: 64px; }
+  .page::before {
+    content: ""; position: absolute; top: 0; bottom: 0; width: 2px;
+    margin-left: -32px; background: var(--margin); opacity: .55;
+  }
+  .page { position: relative; }
+}
+
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.1; }
+h1 { font-size: clamp(2.6rem, 7vw, 4.4rem); font-weight: 800; letter-spacing: -0.02em; }
+h2 { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.01em; }
+h3 { font-size: 1.1rem; font-weight: 600; }
+p { margin: 0; max-width: 66ch; }
+.eyebrow {
+  font-family: var(--f-mono); font-size: .78rem; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--muted);
+}
+.hand { font-family: var(--f-hand); font-size: 1.45rem; line-height: 1.2; color: var(--accent); }
+.hl { background: linear-gradient(transparent 55%, color-mix(in srgb, var(--mark) 70%, transparent) 55%); padding: 0 .1em; }
+section { display: grid; gap: 18px; }
+.sec-head { display: grid; gap: 6px; }
+
+/* Hero */
+header { display: grid; gap: 18px; }
+.hero-objs { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid var(--line); background: var(--card);
+  border-radius: 999px; padding: 4px 14px 4px 6px; font-size: .95rem;
+}
+.chip canvas { width: 28px; height: 28px; }
+.lead { font-size: 1.15rem; }
+.topline { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 20px; }
+.author { font-family: var(--f-hand); font-size: 1.6rem; line-height: 1; color: var(--accent); white-space: nowrap; }
+.author b { font-weight: 700; }
+
+/* Theory */
+.two { display: grid; grid-template-columns: 1fr; gap: 24px; }
+@media (min-width: 760px) { .two { grid-template-columns: 1.4fr 1fr; } }
+.two > * { min-width: 0; }
+.formula {
+  background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+  padding: 18px 20px; display: grid; gap: 10px; align-content: start;
+}
+.formula .big { font-family: var(--f-mono); font-size: 1.5rem; font-weight: 600; color: var(--accent); }
+.formula small { color: var(--muted); font-size: .9rem; }
+.prose { display: grid; gap: 12px; }
+
+ul.tools { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px 20px; }
+ul.tools li { border-bottom: 1px dashed var(--line); padding: 6px 0; }
+ul.tools b { font-weight: 600; }
+
+ol.steps { margin: 0; padding-left: 1.4em; display: grid; gap: 10px; max-width: 70ch; }
+ol.steps li::marker { font-family: var(--f-mono); font-weight: 600; color: var(--accent); }
+
+/* Simulation */
+.sim {
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  display: grid; gap: 0; overflow: hidden;
+}
+.controls {
+  display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center;
+  padding: 14px 16px; border-bottom: 1px solid var(--line);
+}
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg button {
+  font: 600 .92rem var(--f-body); border: 0; background: transparent; color: var(--ink);
+  padding: 7px 14px; cursor: pointer;
+}
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--card); }
+.ctl { display: flex; align-items: center; gap: 8px; font-size: .92rem; }
+.ctl output { font-family: var(--f-mono); min-width: 4.6ch; }
+input[type="range"] { accent-color: var(--accent); width: 130px; }
+input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; }
+.btn {
+  font: 600 .95rem var(--f-body); border-radius: 8px; padding: 8px 16px; cursor: pointer;
+  border: 1px solid var(--accent); background: var(--accent); color: var(--card);
+}
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn:focus-visible, .seg button:focus-visible, input:focus-visible { outline: 3px solid var(--mark); outline-offset: 2px; }
+.btns { display: flex; gap: 8px; margin-left: auto; }
+@media (max-width: 600px) { .btns { margin-left: 0; } }
+#stage { display: block; width: 100%; height: 440px; }
+.sim-foot { padding: 12px 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+
+/* Table */
+.table-tools { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; }
+.hfield { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.hfield input { width: 5.5em; }
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--card); }
+table { border-collapse: collapse; width: 100%; min-width: 780px; font-size: .93rem; }
+th, td { border-bottom: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: middle; }
+thead th { font-family: var(--f-mono); font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; background: var(--accent-soft); }
+tbody tr:last-child td { border-bottom: 0; }
+td.cond { font-family: var(--f-display); font-weight: 600; border-right: 1px solid var(--line); width: 110px; }
+td.num, th.num { text-align: right; font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+td.avg { font-weight: 600; color: var(--accent); }
+.obj { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.obj canvas { width: 22px; height: 22px; }
+.tin {
+  width: 4.6em; font: .93rem var(--f-mono); text-align: right; color: var(--ink);
+  background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 5px 6px;
+  font-variant-numeric: tabular-nums;
+}
+.nin {
+  width: 100%; min-width: 210px; font: 1.15rem var(--f-hand); color: var(--accent);
+  background: transparent; border: 0; border-bottom: 1px dashed var(--line); padding: 2px 2px;
+}
+.note { color: var(--muted); font-size: .92rem; }
+.t0 { font-family: var(--f-mono); font-size: .92rem; }
+#copyMsg { font-size: .9rem; color: var(--muted); }
+
+/* Chart */
+.chart-box { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 12px; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: .9rem; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+#chart { width: 100%; height: auto; display: block; }
+#summary { font-size: 1rem; }
+
+/* Observations */
+.obs { display: grid; gap: 14px; }
+.obs-item { display: grid; grid-template-columns: 120px 1fr; gap: 6px 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+.obs-item > * { min-width: 0; }
+.obs-item .tag { font-family: var(--f-mono); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--margin); padding-top: 4px; }
+@media (max-width: 560px) { .obs-item { grid-template-columns: 1fr; } }
+.conclusion {
+  border: 2px solid var(--accent); border-radius: 12px; padding: 20px 22px; background: var(--card);
+  display: grid; gap: 10px;
+}
+footer { color: var(--muted); font-size: .88rem; }
+
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="sheet">
+    <div class="topline">
+      <span class="eyebrow">Detyrë laboratori · Fizikë · Mekanika</span>
+      <span class="author">Punoi: <b>Dion Durma</b></span>
+    </div>
+    <h1>Rënia e lirë</h1>
+    <p class="lead">Hedhim nga e njëjta lartësi tre objekte: një pupël, një zar dhe një tapë vere. Fillimisht i hedhim veç e veç, pastaj secilin të vendosur mbi një fletore. Matim kohën e rënies dhe shohim si ndikon ajri.</p>
+    <div class="hero-objs">
+      <span class="chip"><canvas data-icon="pupla" width="56" height="56"></canvas>Pupla</span>
+      <span class="chip"><canvas data-icon="zari" width="56" height="56"></canvas>Zari</span>
+      <span class="chip"><canvas data-icon="tapa" width="56" height="56"></canvas>Tapa e verës</span>
+      <span class="chip"><canvas data-icon="fletore" width="56" height="56"></canvas>Fletorja</span>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head"><span class="eyebrow">Qëllimi dhe teoria</span><h2>Çfarë duam të zbulojmë</h2></div>
+    <div class="two">
+      <div class="prose">
+        <p><b>Qëllimi:</b> të krahasojmë kohën e rënies së tre objekteve me masë dhe formë të ndryshme dhe të kuptojmë rolin e rezistencës së ajrit.</p>
+        <p><b>Rënia e lirë</b> është lëvizja e një trupi vetëm nën veprimin e forcës së rëndesës. Në boshllëk (pa ajër) <span class="hl">të gjithë trupat bien me të njëjtin nxitim g</span>, pavarësisht masës së tyre.</p>
+        <p>Në ajër, çdo trup ndesh edhe <b>rezistencën e ajrit</b>, e cila vepron në kahun e kundërt me lëvizjen. Për trupat e vegjël dhe të dendur si zari ajo është shumë e vogël. Për trupat e lehtë me sipërfaqe të madhe si pupla, ajo është pothuajse sa pesha e tyre.</p>
+      </div>
+      <div class="formula">
+        <span class="eyebrow">Formulat</span>
+        <span class="big">h = g·t² / 2</span>
+        <span class="big">t = √(2h / g)</span>
+        <small>g ≈ 9,81 m/s² · h lartësia në metra · t koha në sekonda</small>
+        <span class="hand">p.sh. h = 1,5 m → t ≈ 0,55 s</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="eyebrow">Mjetet</span><h2>Çfarë na duhet</h2></div>
+    <ul class="tools">
+      <li><b>Pupla</b>, e lehtë, me sipërfaqe të madhe</li>
+      <li><b>Zari</b>, i vogël dhe i rëndë</li>
+      <li><b>Tapa e verës</b>, e lehtë, me formë cilindri</li>
+      <li><b>Fletore</b> me kapak të fortë</li>
+      <li><b>Kronometër</b> ose telefon</li>
+      <li><b>Metër shirit</b> për lartësinë</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="eyebrow">Ecuria e punës</span><h2>Si e kryejmë eksperimentin</h2></div>
+    <ol class="steps">
+      <li>Mat lartësinë <b>h</b> nga e cila do të hedhësh objektet (p.sh. 1,5 m) dhe shënoje. Lartësia mbetet <b>e njëjtë për të gjitha hedhjet</b>.</li>
+      <li>Mbaj objektin në lartësinë h dhe lëshoje pa i dhënë shtytje. Një shok nis kronometrin në çastin e lëshimit dhe e ndal kur objekti prek dyshemenë.</li>
+      <li>Hidh <b>veç e veç</b> puplën, zarin dhe tapën. Përsërit çdo hedhje 3 herë.</li>
+      <li>Vendos secilin objekt <b>mbi fletore</b>, mbaje fletoren horizontalisht në të njëjtën lartësi dhe lëshoje. Mat kohën deri sa fletorja të prekë dyshemenë. Përsërit 3 herë.</li>
+      <li>Shëno matjet në tabelë, gjej kohën mesatare dhe krahaso rezultatet.</li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="eyebrow">Simulimi</span><h2>Shiko si bien</h2>
+      <p class="note">Objektet tregohen krah për krah që t'i krahasosh, edhe pse në eksperiment i hedh një nga një. Simulimi përdor vlera të përafërta të rezistencës së ajrit.</p>
+    </div>
+    <div class="sim">
+      <div class="controls">
+        <div class="seg" role="group" aria-label="Kushti">
+          <button type="button" id="modeVec" aria-pressed="true">Veç e veç</button>
+          <button type="button" id="modeFl" aria-pressed="false">Mbi fletore</button>
+        </div>
+        <label class="ctl" for="hRange">Lartësia h <input type="range" id="hRange" min="0.5" max="3" step="0.1" value="1.5"><output id="hOut">1,5 m</output></label>
+        <label class="ctl" for="slow"><input type="checkbox" id="slow"> Ngadalë (×¼)</label>
+        <div class="btns">
+          <button type="button" class="btn" id="drop">Hidh</button>
+          <button type="button" class="btn ghost" id="reset">Rivendos</button>
+        </div>
+      </div>
+      <canvas id="stage" aria-label="Simulimi i rënies së puplës, zarit dhe tapës"></canvas>
+      <div class="sim-foot" id="simFoot">Shtyp <b>Hidh</b> për të lëshuar objektet.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="eyebrow">Matjet</span><h2>Tabela e matjeve</h2>
+      <p class="note">Vlerat e mbushura janë <b>shembull</b>. Shkruaj matjet e tua në vend të tyre: mesatarja dhe grafiku llogariten vetë, dhe tabela ruhet në këtë shfletues.</p>
+    </div>
+    <div class="table-tools">
+      <label class="hfield" for="hTable">Lartësia h = <input class="tin" id="hTable" value="1,5" inputmode="decimal"> m</label>
+      <span class="t0" id="t0"></span>
+    </div>
+    <div class="scroll">
+      <table id="tbl">
+        <thead>
+          <tr>
+            <th>Kushti</th><th>Objekti</th>
+            <th class="num">t₁ (s)</th><th class="num">t₂ (s)</th><th class="num">t₃ (s)</th>
+            <th class="num">t mesatare (s)</th><th class="num">g = 2h/t² (m/s²)</th>
+            <th>Çfarë vërehet</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div class="table-tools">
+      <button type="button" class="btn" id="copyBtn">Kopjo tabelën</button>
+      <button type="button" class="btn ghost" id="sampleBtn">Rivendos shembullin</button>
+      <button type="button" class="btn ghost" id="clearBtn">Pastro kohët</button>
+      <span id="copyMsg" role="status"></span>
+    </div>
+    <textarea id="copyFallback" hidden readonly style="width:100%;height:120px;font:12px var(--f-mono)"></textarea>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="eyebrow">Grafiku</span><h2>Krahasimi i kohëve mesatare</h2></div>
+    <div class="chart-box">
+      <div class="legend">
+        <span><i style="background:var(--accent)"></i>Veç e veç</span>
+        <span><i style="background:var(--series2)"></i>Mbi fletore</span>
+      </div>
+      <svg id="chart" viewBox="0 0 640 300" role="img" aria-label="Grafiku i kohëve mesatare të rënies"></svg>
+      <p id="summary" class="hand"></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="eyebrow">Vëzhgimet</span><h2>Çfarë vërehet</h2></div>
+    <div class="obs">
+      <div class="obs-item"><span class="tag">Veç e veç</span>
+        <p><b>Zari dhe tapa</b> bien pothuajse njëkohësisht, rreth 0,55–0,6 s nga 1,5 m, shumë afër kohës teorike. Tapa vonon pak, sepse është më e lehtë dhe ka sipërfaqe më të madhe në krahasim me masën e saj.</p></div>
+      <div class="obs-item"><span class="tag">Pupla</span>
+        <p><b>Pupla</b> bie shumë më ngadalë (2–3 s). Ajo lëkundet anash, rrotullohet dhe rrallë bie në të njëjtin vend. Rezistenca e ajrit bëhet shpejt e barabartë me peshën e saj, prandaj pupla lëviz me një shpejtësi të vogël pothuajse konstante, që quhet <span class="hl">shpejtësia kufi</span>.</p></div>
+      <div class="obs-item"><span class="tag">Mbi fletore</span>
+        <p>Kur objektet vendosen mbi fletore, <b>të tre bien bashkë me fletoren</b> dhe arrijnë në dysheme pothuajse në të njëjtën kohë, rreth 0,6 s. Pupla nuk ngrihet nga fletorja.</p></div>
+      <div class="obs-item"><span class="tag">Pse?</span>
+        <p>Fletorja është e rëndë dhe e shtyn ajrin para vetes. Objekti që ndodhet mbi të nuk ndesh rrymë ajri, kështu që mbi të vepron vetëm pesha. Prandaj pupla, zari dhe tapa bien njëlloj, si në boshllëk.</p></div>
+      <div class="obs-item"><span class="tag">Vlera e g</span>
+        <p>Kur llogarisim g = 2h/t², për zarin del afër 9,8 m/s², ndërsa për puplën veç e veç del më pak se 1 m/s². Kjo tregon se formula e rënies së lirë vlen vetëm kur rezistenca e ajrit është e papërfillshme.</p></div>
+    </div>
+    <div class="conclusion">
+      <span class="eyebrow">Përfundimi</span>
+      <p>Koha e rënies <b>nuk varet nga masa</b> e trupit, por nga sa shumë e pengon ajri. Kur rezistenca e ajrit mënjanohet, si në boshllëk ose kur objekti mbrohet nga fletorja, të gjithë trupat bien me të njëjtin nxitim g.</p>
+      <p>Këtë e tregoi edhe astronauti David Scott në Hënë në vitin 1971 (Apollo 15): ai lëshoi njëkohësisht një çekiç dhe një pupël, dhe të dyja ranë në tokë në të njëjtin çast.</p>
+    </div>
+  </section>
+
+  <footer>Detyrë laboratori në fizikë · Tema: Rënia e lirë · Punoi: Dion Durma</footer>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  var G = 9.81;
+  var OBJS = [
+    { id: "pupla", name: "Pupla", vt: 0.6 },
+    { id: "zari", name: "Zari", vt: 17.4 },
+    { id: "tapa", name: "Tapa e verës", vt: 7.6 }
+  ];
+  var NOTEBOOK_VT = 8.0;
+
+  function css(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+  function fmt(n, d) { if (d === undefined) d = 2; return isFinite(n) ? n.toFixed(d).replace(".", ",") : "–"; }
+  function num(s) { var v = parseFloat(String(s).replace(",", ".")); return isFinite(v) ? v : NaN; }
+
+  /* ---------- Drawing of the objects ---------- */
+  function drawFeather(ctx, x, y, s, rot) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot || 0);
+    var c = css("--feather");
+    ctx.strokeStyle = c; ctx.fillStyle = c;
+    ctx.globalAlpha = 0.35;
+    ctx.beginPath();
+    ctx.moveTo(-s, 0);
+    ctx.quadraticCurveTo(-s * 0.2, -s * 0.55, s * 0.9, -s * 0.12);
+    ctx.quadraticCurveTo(s * 0.2, s * 0.45, -s, 0);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.lineWidth = Math.max(1, s * 0.07);
+    ctx.beginPath(); ctx.moveTo(-s * 1.2, s * 0.08); ctx.quadraticCurveTo(0, -s * 0.05, s * 0.95, -s * 0.12); ctx.stroke();
+    ctx.lineWidth = Math.max(0.6, s * 0.03);
+    for (var i = -0.7; i < 0.8; i += 0.18) {
+      ctx.beginPath(); ctx.moveTo(s * i, -s * 0.02 * i);
+      ctx.lineTo(s * (i + 0.15), -s * 0.38 * (1 - Math.abs(i) * 0.6)); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(s * i, -s * 0.02 * i);
+      ctx.lineTo(s * (i + 0.12), s * 0.3 * (1 - Math.abs(i) * 0.6)); ctx.stroke();
+    }
+    ctx.restore();
+  }
+  function rr(ctx, x, y, w, h, r) {
+    ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+  }
+  function drawDice(ctx, x, y, s, rot) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot || 0);
+    rr(ctx, -s, -s, 2 * s, 2 * s, s * 0.3);
+    ctx.fillStyle = css("--dice"); ctx.fill();
+    ctx.lineWidth = Math.max(1, s * 0.08); ctx.strokeStyle = css("--ink"); ctx.stroke();
+    ctx.fillStyle = css("--dice-pip");
+    var p = s * 0.5, r = s * 0.17;
+    [[-p, -p], [p, -p], [0, 0], [-p, p], [p, p]].forEach(function (q) { ctx.beginPath(); ctx.arc(q[0], q[1], r, 0, 7); ctx.fill(); });
+    ctx.restore();
+  }
+  function drawCork(ctx, x, y, s, rot) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot || 0);
+    var w = s * 2.4, h = s * 1.3;
+    rr(ctx, -w / 2, -h / 2, w, h, h * 0.25);
+    ctx.fillStyle = css("--cork"); ctx.fill();
+    ctx.lineWidth = Math.max(1, s * 0.07); ctx.strokeStyle = css("--cork-dark"); ctx.stroke();
+    ctx.fillStyle = css("--cork-dark");
+    var pts = [[-0.7, -0.2], [-0.3, 0.25], [0.1, -0.15], [0.5, 0.2], [0.75, -0.25], [-0.05, 0.05], [0.35, -0.3], [-0.55, 0.3]];
+    pts.forEach(function (q) { ctx.beginPath(); ctx.arc(q[0] * w / 2, q[1] * h, s * 0.07, 0, 7); ctx.fill(); });
+    ctx.restore();
+  }
+  function drawNotebook(ctx, x, y, w) {
+    var h = Math.max(6, w * 0.09);
+    ctx.fillStyle = css("--notebook");
+    rr(ctx, x - w / 2, y, w, h, 2); ctx.fill();
+    ctx.fillStyle = css("--card");
+    ctx.fillRect(x - w / 2 + 2, y + h * 0.35, w - 4, h * 0.3);
+    return h;
+  }
+  var DRAW = { pupla: drawFeather, zari: drawDice, tapa: drawCork };
+
+  // hero + table icons
+  function drawIcons() {
+    document.querySelectorAll("canvas[data-icon]").forEach(function (cv) {
+      var ctx = cv.getContext("2d"); ctx.clearRect(0, 0, cv.width, cv.height);
+      var k = cv.dataset.icon, c = cv.width / 2;
+      if (k === "pupla") drawFeather(ctx, c, c + 3, cv.width * 0.36, -0.5);
+      else if (k === "zari") drawDice(ctx, c, c, cv.width * 0.3, 0.2);
+      else if (k === "tapa") drawCork(ctx, c, c, cv.width * 0.28, -0.4);
+      else if (k === "fletore") {
+        ctx.fillStyle = css("--notebook"); rr(ctx, c - cv.width * 0.28, c - cv.width * 0.34, cv.width * 0.56, cv.width * 0.68, 4); ctx.fill();
+        ctx.fillStyle = css("--card"); ctx.fillRect(c - cv.width * 0.1, c - cv.width * 0.18, cv.width * 0.3, cv.width * 0.1);
+        ctx.strokeStyle = css("--ink"); ctx.lineWidth = 2;
+        for (var i = 0; i < 5; i++) { ctx.beginPath(); ctx.arc(c - cv.width * 0.28, c - cv.width * 0.24 + i * cv.width * 0.12, cv.width * 0.04, 0, 7); ctx.stroke(); }
+      }
+    });
+  }
+
+  /* ---------- Simulation ---------- */
+  var stage = document.getElementById("stage");
+  var sctx = stage.getContext("2d");
+  var mode = "vec";
+  var H = 1.5;
+  var running = false, simT = 0, lastTs = 0;
+  var bodies = [];
+  var foot = document.getElementById("simFoot");
+
+  function resetBodies() {
+    bodies = OBJS.map(function (o) { return { o: o, y: 0, v: 0, done: false, tEnd: null }; });
+    simT = 0;
+  }
+  function sizeStage() {
+    var dpr = window.devicePixelRatio || 1;
+    var r = stage.getBoundingClientRect();
+    stage.width = Math.round(r.width * dpr); stage.height = Math.round(r.height * dpr);
+    sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw();
+  }
+  function step(dt) {
+    var allDone = true;
+    bodies.forEach(function (b) {
+      if (b.done) return;
+      var vt = mode === "fl" ? NOTEBOOK_VT : b.o.vt;
+      var a = G - G * b.v * b.v / (vt * vt);
+      var v2 = b.v + a * dt, y2 = b.y + (b.v + v2) / 2 * dt;
+      if (y2 >= H) {
+        var frac = (H - b.y) / (y2 - b.y || 1);
+        b.tEnd = simT + frac * dt; b.y = H; b.v = v2; b.done = true;
+      } else { b.y = y2; b.v = v2; allDone = false; }
+    });
+    simT += dt;
+    return allDone;
+  }
+  function frame(ts) {
+    if (!running) return;
+    var real = Math.min(0.05, (ts - lastTs) / 1000); lastTs = ts;
+    var speed = document.getElementById("slow").checked ? 0.25 : 1;
+    var dt = real * speed, sub = Math.max(1, Math.ceil(dt / 0.001)), done = false;
+    for (var i = 0; i < sub; i++) { done = step(dt / sub); if (done) break; }
+    draw();
+    if (done) { running = false; finish(); } else requestAnimationFrame(frame);
+  }
+  function finish() {
+    var parts = bodies.map(function (b) { return b.o.name + ": " + fmt(b.tEnd) + " s"; });
+    var t0 = Math.sqrt(2 * H / G);
+    foot.innerHTML = "<b>" + (mode === "fl" ? "Mbi fletore" : "Veç e veç") + ", h = " + fmt(H, 1) + " m.</b> " + parts.join(" · ") + " · Koha në boshllëk: " + fmt(t0) + " s";
+  }
+  function draw() {
+    var r = stage.getBoundingClientRect(), W = r.width, Hpx = r.height;
+    sctx.clearRect(0, 0, W, Hpx);
+    var top = 58, ground = Hpx - 46, ruler = 54;
+    var ppm = (ground - top) / H;
+    var ink = css("--ink"), muted = css("--muted"), line = css("--line"), accent = css("--accent");
+    // ground
+    sctx.fillStyle = line; sctx.fillRect(0, ground, W, 2);
+    // ruler
+    sctx.strokeStyle = muted; sctx.fillStyle = muted; sctx.lineWidth = 1;
+    sctx.font = "11px " + css("--f-mono").split(",")[0].replace(/"/g, "") + ", monospace";
+    sctx.textAlign = "right"; sctx.textBaseline = "middle";
+    sctx.beginPath(); sctx.moveTo(ruler, top); sctx.lineTo(ruler, ground); sctx.stroke();
+    for (var m = 0; m <= H + 1e-6; m += 0.1) {
+      var yy = ground - m * ppm, major = Math.abs(m * 2 - Math.round(m * 2)) < 1e-6;
+      sctx.beginPath(); sctx.moveTo(ruler - (major ? 9 : 4), yy); sctx.lineTo(ruler, yy); sctx.stroke();
+      if (major) sctx.fillText(fmt(m, 1) + " m", ruler - 12, yy);
+    }
+    // release line
+    sctx.setLineDash([4, 4]); sctx.strokeStyle = accent;
+    sctx.beginPath(); sctx.moveTo(ruler, top); sctx.lineTo(W - 8, top); sctx.stroke(); sctx.setLineDash([]);
+    // lanes
+    var laneW = (W - ruler - 8) / 3;
+    var s = Math.max(9, Math.min(15, laneW * 0.09));
+    bodies.forEach(function (b, i) {
+      var cx = ruler + laneW * (i + 0.5);
+      var y = top + b.y * ppm;
+      // label + timer
+      sctx.textAlign = "center"; sctx.textBaseline = "alphabetic";
+      sctx.fillStyle = ink; sctx.font = "600 14px " + css("--f-body").split(",")[0].replace(/"/g, "") + ", serif";
+      sctx.fillText(b.o.name, cx, Hpx - 18);
+      sctx.font = "600 15px " + css("--f-mono").split(",")[0].replace(/"/g, "") + ", monospace";
+      sctx.fillStyle = b.done ? accent : muted;
+      var tShow = b.done ? b.tEnd : (running || simT > 0 ? simT : 0);
+      sctx.fillText(fmt(tShow) + " s", cx, 24);
+      if (i > 0) { sctx.strokeStyle = line; sctx.beginPath(); sctx.moveTo(ruler + laneW * i, top + 10); sctx.lineTo(ruler + laneW * i, ground - 4); sctx.stroke(); }
+      if (mode === "fl") {
+        var nbW = Math.min(laneW * 0.62, 96), nbH = Math.max(6, nbW * 0.09);
+        var nbY = y - nbH; // notebook bottom touches position
+        drawNotebook(sctx, cx, nbY, nbW);
+        var objH = b.o.id === "zari" ? s : b.o.id === "tapa" ? s * 0.65 : s * 0.3;
+        DRAW[b.o.id](sctx, cx, nbY - objH - 1, s, b.o.id === "pupla" ? -0.08 : 0);
+      } else {
+        var dx = 0, rot = 0, lift = b.o.id === "zari" ? s : b.o.id === "tapa" ? s * 0.65 : s * 0.4;
+        if (b.o.id === "pupla" && !b.done) {
+          var amp = Math.min(1, simT * 1.5) * Math.min(laneW * 0.25, 28);
+          dx = amp * Math.sin(2.4 * simT); rot = 0.55 * Math.cos(2.4 * simT) * Math.min(1, simT * 1.5);
+        }
+        if (b.o.id === "zari" && b.y > 0) rot = b.y * 2.2;
+        if (b.o.id === "tapa" && b.y > 0) rot = b.y * 1.1;
+        DRAW[b.o.id](sctx, cx + dx, y - lift, s, rot);
+      }
+    });
+  }
+  function setMode(m) {
+    mode = m;
+    document.getElementById("modeVec").setAttribute("aria-pressed", m === "vec");
+    document.getElementById("modeFl").setAttribute("aria-pressed", m === "fl");
+    running = false; resetBodies(); draw();
+    foot.innerHTML = m === "fl" ? "Objektet janë vendosur mbi fletore. Shtyp <b>Hidh</b>." : "Shtyp <b>Hidh</b> për të lëshuar objektet.";
+  }
+  document.getElementById("modeVec").addEventListener("click", function () { setMode("vec"); });
+  document.getElementById("modeFl").addEventListener("click", function () { setMode("fl"); });
+  document.getElementById("hRange").addEventListener("input", function (e) {
+    H = parseFloat(e.target.value); document.getElementById("hOut").textContent = fmt(H, 1) + " m";
+    running = false; resetBodies(); draw();
+  });
+  document.getElementById("drop").addEventListener("click", function () {
+    resetBodies(); running = true; foot.textContent = "Duke rënë…";
+    lastTs = performance.now(); requestAnimationFrame(frame);
+  });
+  document.getElementById("reset").addEventListener("click", function () { setMode(mode); });
+
+  /* ---------- Table ---------- */
+  var KEY = "renia-e-lire-tabela-v1";
+  var CONDS = [{ id: "vec", name: "Veç e veç" }, { id: "fl", name: "Mbi fletore" }];
+  var SAMPLE = {
+    h: "1,5",
+    rows: {
+      "vec-pupla": { t: ["2,41", "2,86", "2,63"], n: "Lëkundet anash, rrotullohet, bie shumë ngadalë" },
+      "vec-zari": { t: ["0,58", "0,55", "0,57"], n: "Bie drejt dhe shpejt" },
+      "vec-tapa": { t: ["0,60", "0,62", "0,59"], n: "Bie shpejt, pak pas zarit" },
+      "fl-pupla": { t: ["0,61", "0,58", "0,60"], n: "Qëndron mbi fletore, bie bashkë me të" },
+      "fl-zari": { t: ["0,59", "0,57", "0,60"], n: "Bie bashkë me fletoren" },
+      "fl-tapa": { t: ["0,58", "0,60", "0,59"], n: "Bie bashkë me fletoren" }
+    }
+  };
+  var state = JSON.parse(JSON.stringify(SAMPLE));
+  try { var saved = localStorage.getItem(KEY); if (saved) { var p = JSON.parse(saved); if (p && p.rows) state = p; } } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  var tbody = document.getElementById("tbody");
+  function buildTable() {
+    tbody.innerHTML = "";
+    CONDS.forEach(function (c) {
+      OBJS.forEach(function (o, i) {
+        var key = c.id + "-" + o.id, row = state.rows[key] || (state.rows[key] = { t: ["", "", ""], n: "" });
+        var tr = document.createElement("tr");
+        var html = "";
+        if (i === 0) html += '<td class="cond" rowspan="3">' + c.name + "</td>";
+        html += '<td><span class="obj"><canvas data-icon="' + o.id + '" width="44" height="44"></canvas>' + o.name + "</span></td>";
+        for (var k = 0; k < 3; k++) html += '<td class="num"><input class="tin" id="t-' + key + "-" + k + '" data-key="' + key + '" data-k="' + k + '" inputmode="decimal" aria-label="' + c.name + ", " + o.name + ", matja " + (k + 1) + '" value="' + (row.t[k] || "") + '"></td>';
+        html += '<td class="num avg" id="avg-' + key + '"></td><td class="num" id="g-' + key + '"></td>';
+        html += '<td><input class="nin" id="n-' + key + '" data-key="' + key + '" aria-label="Vërejtje për ' + o.name + ", " + c.name + '"></td>';
+        tr.innerHTML = html;
+        tbody.appendChild(tr);
+        tr.querySelector(".nin").value = row.n || "";
+      });
+    });
+    drawIcons();
+  }
+  function avgOf(key) {
+    var vals = state.rows[key].t.map(num).filter(function (v) { return isFinite(v) && v > 0; });
+    if (!vals.length) return NaN;
+    return vals.reduce(function (a, b) { return a + b; }, 0) / vals.length;
+  }
+  function recalc() {
+    var h = num(state.h);
+    document.getElementById("t0").textContent = isFinite(h) && h > 0 ? "Koha teorike në boshllëk: t = √(2h/g) = " + fmt(Math.sqrt(2 * h / G)) + " s" : "Shkruaj lartësinë në metra.";
+    CONDS.forEach(function (c) {
+      OBJS.forEach(function (o) {
+        var key = c.id + "-" + o.id, a = avgOf(key);
+        document.getElementById("avg-" + key).textContent = fmt(a);
+        document.getElementById("g-" + key).textContent = isFinite(a) && isFinite(h) ? fmt(2 * h / (a * a)) : "–";
+      });
+    });
+    drawChart();
+  }
+  tbody.addEventListener("input", function (e) {
+    var t = e.target, key = t.dataset.key;
+    if (!key) return;
+    if (t.classList.contains("tin")) state.rows[key].t[+t.dataset.k] = t.value;
+    else state.rows[key].n = t.value;
+    save(); recalc();
+  });
+  var hTable = document.getElementById("hTable");
+  hTable.value = state.h;
+  hTable.addEventListener("input", function () { state.h = hTable.value; save(); recalc(); });
+
+  document.getElementById("sampleBtn").addEventListener("click", function () {
+    state = JSON.parse(JSON.stringify(SAMPLE)); hTable.value = state.h; save(); buildTable(); recalc();
+    msg("Vlerat shembull u rivendosën.");
+  });
+  document.getElementById("clearBtn").addEventListener("click", function () {
+    Object.keys(state.rows).forEach(function (k) { state.rows[k].t = ["", "", ""]; });
+    save(); buildTable(); recalc(); msg("Kohët u pastruan. Shkruaj matjet e tua.");
+  });
+  function msg(s) { var el = document.getElementById("copyMsg"); el.textContent = s; }
+  function tableText() {
+    var h = num(state.h);
+    var out = ["Rënia e lirë · h = " + state.h + " m",
+      ["Kushti", "Objekti", "t1 (s)", "t2 (s)", "t3 (s)", "t mesatare (s)", "g = 2h/t² (m/s²)", "Çfarë vërehet"].join("\t")];
+    CONDS.forEach(function (c) {
+      OBJS.forEach(function (o) {
+        var key = c.id + "-" + o.id, r = state.rows[key], a = avgOf(key);
+        out.push([c.name, o.name, r.t[0], r.t[1], r.t[2], fmt(a), isFinite(a) && isFinite(h) ? fmt(2 * h / (a * a)) : "", r.n].join("\t"));
+      });
+    });
+    return out.join("\n");
+  }
+  document.getElementById("copyBtn").addEventListener("click", function () {
+    var text = tableText(), fb = document.getElementById("copyFallback");
+    function fallback() { fb.hidden = false; fb.value = text; fb.focus(); fb.select(); msg("Zgjidh tekstin poshtë dhe kopjoje me Ctrl+C."); }
+    try {
+      navigator.clipboard.writeText(text).then(function () { fb.hidden = true; msg("Tabela u kopjua. Ngjite në Word ose Excel."); }, fallback);
+    } catch (e) { fallback(); }
+  });
+
+  /* ---------- Chart ---------- */
+  function drawChart() {
+    var svg = document.getElementById("chart");
+    var W = 640, L = 118, R = 60, T = 8, rowH = 38, gapC = 18;
+    var rows = [];
+    OBJS.forEach(function (o) { rows.push({ o: o, vec: avgOf("vec-" + o.id), fl: avgOf("fl-" + o.id) }); });
+    var max = 0; rows.forEach(function (r) { [r.vec, r.fl].forEach(function (v) { if (isFinite(v)) max = Math.max(max, v); }); });
+    var stepT = max > 2 ? 0.5 : max > 1 ? 0.25 : 0.1;
+    var top = Math.max(stepT, Math.ceil((max || 0.1) / stepT) * stepT);
+    var Hs = T + rows.length * (rowH * 2 + gapC) + 30;
+    svg.setAttribute("viewBox", "0 0 " + W + " " + Hs);
+    var x = function (v) { return L + (W - L - R) * v / top; };
+    var s = "";
+    for (var t = 0; t <= top + 1e-9; t += stepT) {
+      var xx = x(t);
+      s += '<line x1="' + xx + '" y1="' + T + '" x2="' + xx + '" y2="' + (Hs - 24) + '" stroke="var(--line)" stroke-width="1"/>';
+      s += '<text x="' + xx + '" y="' + (Hs - 8) + '" fill="var(--muted)" font-size="12" text-anchor="middle" font-family="var(--f-mono)">' + fmt(t, stepT < 0.25 ? 1 : 2) + ' s</text>';
+    }
+    var h0 = num(state.h);
+    if (isFinite(h0) && h0 > 0) {
+      var t0 = Math.sqrt(2 * h0 / G);
+      if (t0 <= top) {
+        s += '<line x1="' + x(t0) + '" y1="' + T + '" x2="' + x(t0) + '" y2="' + (Hs - 24) + '" stroke="var(--ink)" stroke-dasharray="4 4" stroke-width="1.3"/>';
+        s += '<text x="' + (x(t0) + 5) + '" y="' + (T + 12) + '" fill="var(--ink)" font-size="12" font-family="var(--f-mono)">boshllëk ' + fmt(t0) + ' s</text>';
+      }
+    }
+    rows.forEach(function (r, i) {
+      var y = T + 20 + i * (rowH * 2 + gapC);
+      s += '<text x="' + (L - 12) + '" y="' + (y + rowH - 4) + '" fill="var(--ink)" font-size="14" text-anchor="end" font-family="var(--f-body)" font-weight="600">' + r.o.name + '</text>';
+      [["vec", "var(--accent)"], ["fl", "var(--series2)"]].forEach(function (pair, j) {
+        var v = r[pair[0]], yy = y + j * (rowH - 6);
+        if (isFinite(v)) {
+          s += '<rect x="' + L + '" y="' + yy + '" width="' + Math.max(1, x(v) - L) + '" height="' + (rowH - 14) + '" rx="3" fill="' + pair[1] + '"/>';
+          s += '<text x="' + (x(v) + 6) + '" y="' + (yy + rowH / 2 - 2) + '" fill="var(--ink)" font-size="12.5" font-family="var(--f-mono)" dominant-baseline="middle">' + fmt(v) + '</text>';
+        } else {
+          s += '<text x="' + (L + 4) + '" y="' + (yy + rowH / 2 - 2) + '" fill="var(--muted)" font-size="12" font-family="var(--f-mono)" dominant-baseline="middle">pa matje</text>';
+        }
+      });
+    });
+    svg.innerHTML = s;
+
+    // summary
+    var sum = document.getElementById("summary");
+    var pf = avgOf("vec-pupla"), zr = avgOf("vec-zari");
+    var flVals = OBJS.map(function (o) { return avgOf("fl-" + o.id); }).filter(isFinite);
+    var parts = [];
+    if (isFinite(pf) && isFinite(zr)) parts.push("Veç e veç, pupla bie rreth " + fmt(pf / zr, 1) + " herë më ngadalë se zari.");
+    if (flVals.length > 1) parts.push("Mbi fletore, diferenca mes më të shpejtit dhe më të ngadaltit është vetëm " + fmt(Math.max.apply(null, flVals) - Math.min.apply(null, flVals)) + " s.");
+    sum.textContent = parts.length ? "Sipas tabelës: " + parts.join(" ") : "Plotëso tabelën për të parë krahasimin.";
+  }
+
+  /* ---------- Init ---------- */
+  resetBodies();
+  buildTable();
+  recalc();
+  sizeStage();
+  if (window.ResizeObserver) new ResizeObserver(sizeStage).observe(stage);
+  else window.addEventListener("resize", sizeStage);
+  var mq = window.matchMedia("(prefers-color-scheme: dark)");
+  var redraw = function () { drawIcons(); draw(); };
+  if (mq.addEventListener) mq.addEventListener("change", redraw);
+  new MutationObserver(redraw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(redraw);
+})();
+</script>
+</body>
+</html>
